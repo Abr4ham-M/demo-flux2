@@ -29,5 +29,16 @@ flux create source git podinfo \
   --interval=1m \
   --export > ./clusters/demo-cluster/podinfo-source.yaml
 
-  
+## Creación de un manifiesto.
+
+flux create kustomization podinfo \
+  --target-namespace=default \
+  --source=podinfo \
+  --path="./kustomize" \
+  --prune=true \
+  --wait=true \
+  --interval=30m \
+  --retry-interval=2m \
+  --health-check-timeout=3m \
+  --export > ./clusters/demo-cluster/podinfo-kustomization.yaml
 

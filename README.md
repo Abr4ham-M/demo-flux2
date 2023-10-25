@@ -11,9 +11,9 @@ brew install fluxcd/tap/flux
 
 ### Bootstraping en Github
 
-export GITHUB_TOKEN=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
+export GITHUB_TOKEN=<PAT-token>
 
-flux bootstrap github \                                     
+flux bootstrap github \
   --token-auth \
   --owner=cvergarae \
   --repository=demo-flux2 \
@@ -24,7 +24,7 @@ flux bootstrap github \
 ## Creación de un manifiesto.
 
 flux create source git podinfo \
-  --url=https://github.com/stefanprodan/podinfo \
+  --url=https://github.com/cvergarae/podinfo \
   --branch=master \
   --interval=1m \
   --export > ./clusters/demo-cluster/podinfo-source.yaml
@@ -42,3 +42,8 @@ flux create kustomization podinfo \
   --health-check-timeout=3m \
   --export > ./clusters/demo-cluster/podinfo-kustomization.yaml
 
+## ver estado de despliegue
+flux get kustomizations --watch
+
+
+docker build . -t podinfo  

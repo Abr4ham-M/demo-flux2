@@ -52,6 +52,11 @@ docker build . -t podinfo
 ➜  polimatas flux reconcile kustomization podinfo -n flux-system
 
 
+flux create image repository podinfo \
+--image=layer0/podinfo \
+--interval=5m \
+--export > ./clusters/demo-cluster/podinfo-registry.yaml
+
 flux create image update flux-system \
 --interval=30m \
 --git-repo-ref=flux-system \

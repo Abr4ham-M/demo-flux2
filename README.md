@@ -47,3 +47,18 @@ flux get kustomizations --watch
 
 
 docker build . -t podinfo  
+
+
+➜  polimatas flux reconcile kustomization podinfo -n flux-system
+
+
+flux create image update flux-system \
+--interval=30m \
+--git-repo-ref=flux-system \
+--git-repo-path="./clusters/demo-cluster" \
+--checkout-branch=main \
+--push-branch=main \
+--author-name=fluxcdbot \
+--author-email=fluxcdbot@users.noreply.github.com \
+--commit-template="{{range .Updated.Images}}{{println .}}{{end}}" \
+--export > ./clusters/demo-cluster/flux-system-automation.yaml

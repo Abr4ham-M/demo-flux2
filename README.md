@@ -14,14 +14,25 @@ brew install fluxcd/tap/flux
 export GITHUB_TOKEN=<PAT-token>
 
 flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
   --token-auth \
   --owner=cvergarae \
   --repository=demo-flux2 \
   --branch=main \
   --path=clusters/demo-cluster \
+  --read-write-key \
   --personal
 
 ## Creación de un manifiesto.
+
+flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
+  --owner=$GITHUB_USER \
+  --repository=flux-image-updates \
+  --branch=main \
+  --path=clusters/my-cluster \
+  --read-write-key \
+  --personal
 
 flux create source git podinfo \
   --url=https://github.com/cvergarae/podinfo \
@@ -52,10 +63,26 @@ docker build . -t podinfo
 ➜  polimatas flux reconcile kustomization podinfo -n flux-system
 
 
+
+
+# Creación Política de inagen
+
+flux create image policy podinfo \
+--image-ref=podinfo \
+--filter-regex='dev-*' \
+--select-alpha='asc' \
+--export > ./clusters/demo-cluster/podinfo-policy.yaml
+
+
+
 flux create image repository podinfo \
 --image=layer0/podinfo \
 --interval=5m \
 --export > ./clusters/demo-cluster/podinfo-registry.yaml
+
+# Creación ImageUpdateAutomation
+
+
 
 flux create image update flux-system \
 --interval=30m \

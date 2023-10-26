@@ -94,3 +94,6 @@ flux create image update flux-system \
 --author-email=fluxcdbot@users.noreply.github.com \
 --commit-template="{{range .Updated.Images}}{{println .}}{{end}}" \
 --export > ./clusters/demo-cluster/flux-system-automation.yaml
+
+
+flux reconcile kustomization --with-source flux-system

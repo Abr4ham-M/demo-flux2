@@ -8,18 +8,18 @@ spec:
   git:
     checkout:
       ref:
-        branch: main
+        branch: master
     commit:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
       messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
     push:
-      branch: main
+      branch: master
   interval: 30m0s
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: podinfo
   update:
-    path: ./clusters/demo-cluster
+    path: ./kustomize
     strategy: Setters

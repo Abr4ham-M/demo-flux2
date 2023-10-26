@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   filterTags:
-    pattern: '^dev-(<ts>)'
+    pattern: '^dev-(?P<ts>)'
     extract: '$ts'
   policy:
     numerical:

@@ -26,10 +26,11 @@ flux bootstrap github \
 ## NO Creación de una fuente.
 
 flux create source git podinfo \
-  --url=https://github.com/cvergarae/podinfo \
+  --url=https://github.com/cvergarae/demo-flux2 \
   --branch=master \
   --interval=1m \
-  --export > ./clusters/demo-cluster/podinfo-source.yaml
+  --namespace=podinfo \
+  --export > ./clusters/demo-cluster/flux-system/podinfo-source.yaml
 
 ## Creación de un manifiesto.
 

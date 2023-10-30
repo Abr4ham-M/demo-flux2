@@ -108,3 +108,20 @@ flux create image update flux-system \
 
 
 flux reconcile kustomization --with-source flux-system
+
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: podinfo
+  namespace: flux-system
+spec:
+  filterTags:
+    pattern: '^dev-(?P<ts>.*)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
+  imageRepositoryRef:
+    name: podinfo

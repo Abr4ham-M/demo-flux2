@@ -23,16 +23,7 @@ flux bootstrap github \
   --read-write-key \
   --personal
 
-## Creación de un manifiesto.
-
-flux bootstrap github \
-  --components-extra=image-reflector-controller,image-automation-controller \
-  --owner=$GITHUB_USER \
-  --repository=flux-image-updates \
-  --branch=main \
-  --path=clusters/my-cluster \
-  --read-write-key \
-  --personal
+## NO Creación de una fuente.
 
 flux create source git podinfo \
   --url=https://github.com/cvergarae/podinfo \

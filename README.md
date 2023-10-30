@@ -5,6 +5,8 @@
 ## Instalación Flux en MacOS
 
 brew install fluxcd/tap/flux
+## Check flux
+flux check --pre
 
 
 ## Instalación Flux en Kubernetes

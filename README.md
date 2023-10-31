@@ -36,13 +36,6 @@ flux bootstrap github \
 flux get kustomizations --watch
 
 
-
-
-
-docker build . -t podinfo  
-
-
-
 # Creación Política de inagen
 
 flux create image policy podinfo \
@@ -114,3 +107,10 @@ PASSWORD="<A new password you create, removing the brackets and including the qu
 gitops create dashboard ww-gitops \
   --password=$PASSWORD \
   --export > ./clusters/demo-cluster/weave-gitops-dashboard.yaml
+
+
+kubectl port-forward svc/ww-gitops-weave-gitops -n flux-system 9001:9001
+
+## 
+
+docker build . -t podinfo  

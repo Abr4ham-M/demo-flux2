@@ -66,16 +66,6 @@ flux create image update flux-system \
 --commit-template="{{range .Updated.Images}}{{println .}}{{end}}" \
 --export > ./clusters/demo-cluster/flux-system-automation.yaml
 
-flux create image update flux-system \
---interval=30m \
---git-repo-ref=podinfo \
---git-repo-path="./kustomize" \
---checkout-branch=master \
---push-branch=master \
---author-name=fluxcdbot \
---author-email=fluxcdbot@users.noreply.github.com \
---commit-template="{{range .Updated.Images}}{{println .}}{{end}}" \
---export > ./clusters/demo-cluster/podinfo-automation.yaml
 
 
 flux reconcile kustomization --with-source flux-system
@@ -114,3 +104,6 @@ kubectl port-forward svc/ww-gitops-weave-gitops -n flux-system 9001:9001
 ## 
 
 docker build . -t podinfo  
+
+docker build . -t layer0/podinfo:dev-7
+

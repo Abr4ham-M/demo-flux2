@@ -5,20 +5,25 @@
 ## Instalación Flux en MacOS
 
 **Instalación en MacOS**
+```
 brew install fluxcd/tap/flux
-
+```
 **Check flux**
+```
 flux check --pre
-
+```
 
 ## Instalación Flux en Kubernetes
 
 ### Bootstraping en Github
 
 **Credenciales Github**
+```
 export GITHUB_TOKEN=<PAT-token>
+```
 
 **Bootstrap en github**
+```
 flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller \
   --token-auth \
@@ -28,33 +33,45 @@ flux bootstrap github \
   --path=clusters/demo-cluster \
   --read-write-key \
   --personal
+```
 
 ## Despliegue Aplicación podinfo
 
-
 ## ver estado de despliegue
+```
 flux get kustomizations --watch
-
+```
 
 # Creación Política de inagen
 
+```
 flux create image policy podinfo \
 --image-ref=podinfo \
 --filter-regex='dev-*' \
 --select-alpha='asc' \
 --export > ./clusters/demo-cluster/podinfo-policy.yaml
+```
+
+```
+flux create image policy podinfo \
+--image-ref=podinfo \
+--filter-regex='^dev-(?P<ts>.*)' \
+--filter-extract='$ts' \
+--select-numeric='asc' \
+--export > ./clusters/demo-cluster/podinfo-policy.yaml
+```
 
 
-
+```
 flux create image repository podinfo \
 --image=layer0/podinfo \
 --interval=5m \
 --export > ./clusters/demo-cluster/podinfo-registry.yaml
+```
 
 # Creación ImageUpdateAutomation
 
-
-
+```
 flux create image update flux-system \
 --interval=30m \
 --git-repo-ref=flux-system \
@@ -65,12 +82,12 @@ flux create image update flux-system \
 --author-email=fluxcdbot@users.noreply.github.com \
 --commit-template="{{range .Updated.Images}}{{println .}}{{end}}" \
 --export > ./clusters/demo-cluster/flux-system-automation.yaml
+```
 
-
-
+```
 flux reconcile kustomization --with-source flux-system
-
-
+```
+```
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -86,7 +103,7 @@ spec:
       order: asc
   imageRepositoryRef:
     name: podinfo
-
+```
 
 # Instalación GitOps Weaveworks
 

@@ -6,10 +6,10 @@ metadata:
   namespace: flux-system
 spec:
   filterTags:
-    extract: ""
-    pattern: dev-*
+    extract: $ts
+    pattern: ^dev-(?P<ts>.*)
   imageRepositoryRef:
     name: podinfo
   policy:
-    alphabetical:
+    numerical:
       order: asc

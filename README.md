@@ -4,8 +4,10 @@
 
 ## Instalación Flux en MacOS
 
+**Instalación en MacOS**
 brew install fluxcd/tap/flux
-## Check flux
+
+**Check flux**
 flux check --pre
 
 
@@ -13,8 +15,10 @@ flux check --pre
 
 ### Bootstraping en Github
 
+**Credenciales Github**
 export GITHUB_TOKEN=<PAT-token>
 
+**Bootstrap en github**
 flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller \
   --token-auth \
@@ -25,37 +29,17 @@ flux bootstrap github \
   --read-write-key \
   --personal
 
-## NO Creación de una fuente.
+## Despliegue Aplicación podinfo
 
-flux create source git podinfo \
-  --url=https://github.com/cvergarae/demo-flux2 \
-  --branch=master \
-  --interval=1m \
-  --namespace=podinfo \
-  --export > ./clusters/demo-cluster/flux-system/podinfo-source.yaml
-
-## Creación de un manifiesto.
-
-flux create kustomization podinfo \
-  --target-namespace=default \
-  --source=podinfo \
-  --path="./kustomize" \
-  --prune=true \
-  --wait=true \
-  --interval=30m \
-  --retry-interval=2m \
-  --health-check-timeout=3m \
-  --export > ./clusters/demo-cluster/podinfo-kustomization.yaml
 
 ## ver estado de despliegue
 flux get kustomizations --watch
 
 
+
+
+
 docker build . -t podinfo  
-
-
-➜  polimatas flux reconcile kustomization podinfo -n flux-system
-
 
 
 
@@ -119,3 +103,14 @@ spec:
       order: asc
   imageRepositoryRef:
     name: podinfo
+
+
+# Instalación GitOps Weaveworks
+
+brew tap weaveworks/tap
+brew install weaveworks/tap/gitops
+
+PASSWORD="<A new password you create, removing the brackets and including the quotation marks>"
+gitops create dashboard ww-gitops \
+  --password=$PASSWORD \
+  --export > ./clusters/demo-cluster/weave-gitops-dashboard.yaml

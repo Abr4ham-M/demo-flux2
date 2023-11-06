@@ -120,12 +120,13 @@ kubectl port-forward svc/ww-gitops-weave-gitops -n flux-system 9001:9001
 
 # Comandos varios
 
+
 ```
-docker build . -t podinfo  
+docker build . -t layer0/podinfo:dev-8
 ```
 
 ```
-docker build . -t layer0/podinfo:dev-7
+docker push layer0/podinfo:dev-8
 ```
 
 ```

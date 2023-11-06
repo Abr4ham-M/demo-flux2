@@ -44,13 +44,15 @@ flux get kustomizations --watch
 
 # Creación Política de inagen
 
+**Creación repositorio de imágenes**
 ```
-flux create image policy podinfo \
---image-ref=podinfo \
---filter-regex='dev-*' \
---select-alpha='asc' \
---export > ./clusters/demo-cluster/podinfo-policy.yaml
+flux create image repository podinfo \
+--image=layer0/podinfo \
+--interval=5m \
+--export > ./clusters/demo-cluster/podinfo-registry.yaml
 ```
+
+**Creación política de atualización**
 
 ```
 flux create image policy podinfo \
@@ -61,15 +63,7 @@ flux create image policy podinfo \
 --export > ./clusters/demo-cluster/podinfo-policy.yaml
 ```
 
-
-```
-flux create image repository podinfo \
---image=layer0/podinfo \
---interval=5m \
---export > ./clusters/demo-cluster/podinfo-registry.yaml
-```
-
-# Creación ImageUpdateAutomation
+**Creación configuración de actualización de imágenes**
 
 ```
 flux create image update flux-system \
@@ -84,9 +78,8 @@ flux create image update flux-system \
 --export > ./clusters/demo-cluster/flux-system-automation.yaml
 ```
 
-```
-flux reconcile kustomization --with-source flux-system
-```
+
+
 ```
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
@@ -107,20 +100,34 @@ spec:
 
 # Instalación GitOps Weaveworks
 
+```
 brew tap weaveworks/tap
 brew install weaveworks/tap/gitops
-
+```
+```
 PASSWORD="<A new password you create, removing the brackets and including the quotation marks>"
+```
+```
 gitops create dashboard ww-gitops \
   --password=$PASSWORD \
   --export > ./clusters/demo-cluster/weave-gitops-dashboard.yaml
+```
 
-
+```
 kubectl port-forward svc/ww-gitops-weave-gitops -n flux-system 9001:9001
+```
 
-## 
 
+# Comandos varios
+
+```
 docker build . -t podinfo  
+```
 
+```
 docker build . -t layer0/podinfo:dev-7
+```
 
+```
+flux reconcile kustomization --with-source flux-system
+```

@@ -5,5 +5,5 @@ metadata:
   name: podinfo
   namespace: flux-system
 spec:
-  image: layer0/podinfo
+  image: abr4ham/podinfo
   interval: 5m0s

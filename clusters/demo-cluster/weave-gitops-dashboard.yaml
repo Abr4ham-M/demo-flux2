@@ -35,4 +35,8 @@ spec:
   interval: 1h0m0s
   values:
     WEAVE_GITOPS_FEATURE_TELEMETRY: "true"
+    adminUser:
+      create: true
+      passwordHash: $2a$10$KFuiinpyC9OBLGMDssrXLeyx3FUaQD3wDTtBkEngTZeKYRh80pz2W
+      username: admin
 

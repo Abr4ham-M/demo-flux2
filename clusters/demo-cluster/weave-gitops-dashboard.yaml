@@ -34,8 +34,5 @@ spec:
         name: ww-gitops
   interval: 1h0m0s
   values:
-    adminUser:
-      create: true
-      passwordHash: $2a$10$hviGp38Vx3b7zsXgl7omZ.QWY2dD0lBFbhVALS.6XG0aHiZkvuy3i
-      username: admin
+    WEAVE_GITOPS_FEATURE_TELEMETRY: "true"
 
